@@ -23,12 +23,17 @@
                     colors: {
                         tealDark: '#0b5d54',
                         tealLight: '#dbece9',
+                        tealAccent: '#e6f2f0',
                         textDark: '#1a403c',
                         whatsappGreen: '#25D366',
+                        gold: '#d4af37',
                     },
                     fontFamily: {
                         sans: ['Montserrat', 'sans-serif'],
-                        serif: ['Montserrat', 'sans-serif'], // Uso Montserrat anche per "serif" come fallback visuale coerente
+                        serif: ['Montserrat', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(11, 93, 84, 0.15)',
                     }
                 }
             }
@@ -40,318 +45,415 @@
             font-family: 'Montserrat', sans-serif;
             color: #1a403c;
         }
-        /* Classe personalizzata per il blob pattern se necessario */
-        .bg-pattern-blob {
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%230b5d54' d='M44.7,-76.4C58.9,-69.2,71.8,-59.1,81.6,-46.6C91.4,-34.1,98.1,-19.2,95.8,-5.3C93.5,8.6,82.2,21.5,71.1,32.3C60,43.1,49.1,51.8,37.6,60.8C26.1,69.8,14,79.1,0.6,78.1C-12.8,77.1,-27.1,65.8,-39.9,56.1C-52.7,46.4,-64,38.3,-71.8,27.3C-79.6,16.3,-83.9,2.4,-81.2,-10.1C-78.5,-22.6,-68.8,-33.7,-57.8,-42.6C-46.8,-51.5,-34.5,-58.2,-21.9,-66.2C-9.3,-74.2,3.6,-83.5,16.4,-83.5C29.2,-83.5,42,-74.2,44.7,-76.4Z' transform='translate(100 100)' /%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right bottom;
-        }
         
         /* Smooth scrolling */
         html {
             scroll-behavior: smooth;
         }
+
+        /* Animazioni Custom */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, visibility;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* Animazione pulsante */
+        @keyframes pulse-custom {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(11, 93, 84, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(11, 93, 84, 0); }
+        }
+        .btn-pulse {
+            animation: pulse-custom 2s infinite;
+        }
+
+        /* Floating animation per l'immagine hero */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
     </style>
 </head>
-<body class="min-h-screen font-sans text-textDark">
+<body class="min-h-screen font-sans text-textDark bg-tealAccent/20">
 
     <!-- Navbar -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent py-4">
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent py-4 backdrop-blur-sm">
         <div class="container mx-auto px-6 flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <!-- Logo placeholder - stilizzato -->
-                <div class="relative w-10 h-10 flex items-center justify-center">
-                    <div class="absolute w-full h-full border-2 rounded-full border-teal-700 opacity-20"></div>
-                    <div class="w-2 h-2 bg-teal-800 rounded-full mb-4"></div>
-                    <div class="absolute w-6 h-6 border-r-2 border-teal-800 rounded-full transform rotate-45"></div>
-                </div>
-                <div>
-                    <h1 class="text-2xl font-bold tracking-tight text-tealDark">Fisiopath</h1>
-                    <p class="text-[0.6rem] tracking-[0.2em] uppercase text-gray-500 -mt-1">Fisioterapia</p>
-                </div>
-            </div>
+            <div class="flex items-center">
+  <a href="#home" class="flex items-center justify-center pl-4 md:pl-8">
+    <img
+      src="logo completo.svg"
+      alt="Fisiopath Logo"
+      class="h-14 md:h-16 w-auto"
+    >
+  </a>
+</div>
 
             <!-- Desktop Menu -->
-            <div class="hidden md:flex space-x-8 font-medium text-sm">
-                <a href="#home" class="hover:text-tealDark transition-colors">Home</a>
-                <a href="#approccio" class="hover:text-tealDark transition-colors">Il Nostro Approccio</a>
-                <a href="#trattamenti" class="hover:text-tealDark transition-colors">Trattamenti</a>
-                <a href="#contatti" class="hover:text-tealDark transition-colors">Contatti</a>
-                <a href="#contatti" class="px-5 py-2 bg-tealDark text-white rounded-full hover:bg-[#08453e] transition-colors">Prenota Visita</a>
+            <div class="hidden md:flex space-x-8 font-medium text-sm items-center">
+                <a href="#home" class="hover:text-tealDark transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-tealDark after:transition-all hover:after:w-full">Home</a>
+                <a href="#approccio" class="hover:text-tealDark transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-tealDark after:transition-all hover:after:w-full">Approccio</a>
+                <a href="#trattamenti" class="hover:text-tealDark transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-tealDark after:transition-all hover:after:w-full">Trattamenti</a>
+                <a href="#testimonianze" class="hover:text-tealDark transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-tealDark after:transition-all hover:after:w-full">Dicono di noi</a>
+                <a href="#contatti" class="px-6 py-2.5 bg-tealDark text-white rounded-full hover:bg-[#08453e] transition-all hover:shadow-lg transform hover:-translate-y-0.5">Prenota Visita</a>
             </div>
 
             <!-- Mobile Menu Button -->
-            <button id="mobile-menu-btn" class="md:hidden text-tealDark">
+            <button id="mobile-menu-btn" class="md:hidden text-tealDark p-2 hover:bg-tealLight/50 rounded-lg transition-colors">
                 <i data-lucide="menu" class="w-7 h-7"></i>
             </button>
         </div>
 
         <!-- Mobile Menu Dropdown -->
-        <div id="mobile-menu" class="hidden bg-white absolute top-full left-0 w-full shadow-lg py-4 px-6 flex flex-col space-y-4">
-            <a href="#home" class="mobile-link text-lg font-medium">Home</a>
-            <a href="#approccio" class="mobile-link text-lg font-medium">Il Nostro Approccio</a>
-            <a href="#trattamenti" class="mobile-link text-lg font-medium">Trattamenti</a>
-            <a href="#contatti" class="mobile-link text-lg font-medium">Contatti</a>
-            <a href="#contatti" class="mobile-link text-tealDark font-bold">Prenota Visita</a>
+        <div id="mobile-menu" class="hidden bg-white/95 backdrop-blur-md absolute top-full left-0 w-full shadow-soft py-6 px-6 flex flex-col space-y-5 border-t border-gray-100">
+            <a href="#home" class="mobile-link text-lg font-medium text-gray-800">Home</a>
+            <a href="#approccio" class="mobile-link text-lg font-medium text-gray-800">Il Nostro Approccio</a>
+            <a href="#trattamenti" class="mobile-link text-lg font-medium text-gray-800">Trattamenti</a>
+            <a href="#testimonianze" class="mobile-link text-lg font-medium text-gray-800">Dicono di noi</a>
+            <a href="#contatti" class="mobile-link text-tealDark font-bold bg-tealAccent/50 p-3 rounded-lg text-center">Prenota Visita</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="relative pt-32 pb-20 px-6 overflow-hidden">
-        <!-- Organic Blob Background Shape -->
-        <div class="absolute top-0 right-0 w-1/2 h-full opacity-10 bg-tealDark rounded-bl-[100px] -z-10 hidden md:block"></div>
-        <div class="absolute bottom-0 left-0 w-64 h-64 bg-tealLight rounded-tr-full -z-10 opacity-50"></div>
+    <section id="home" class="relative pt-36 pb-24 px-6 overflow-hidden min-h-screen flex items-center">
+        <!-- Background Graphics -->
+        <div class="absolute top-0 right-0 w-[60%] h-full bg-gradient-to-l from-tealLight/40 to-transparent rounded-bl-[150px] -z-10 hidden md:block"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-tealAccent rounded-tr-full -z-10 opacity-60 filter blur-3xl"></div>
         
-        <div class="container mx-auto grid md:grid-cols-2 gap-12 items-center">
-            <div class="space-y-6">
-                <h2 class="text-4xl md:text-6xl font-bold leading-tight text-tealDark">
-                    Fisioterapia e <br />
-                    <span class="font-light">Benessere della Colonna</span>
+        <div class="container mx-auto grid md:grid-cols-2 gap-12 items-center fade-in-section">
+            <!-- Blocco testo e pulsanti - spostato a destra su desktop -->
+            <div class="space-y-8 md:pl-16 lg:pl-24">
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm text-sm font-medium text-tealDark border border-tealAccent">
+                    <span class="w-2 h-2 rounded-full bg-whatsappGreen animate-pulse"></span>
+                    Disponibili nuovi posti per Gennaio
+                </div>
+                
+                <h2 class="text-5xl md:text-7xl font-bold leading-[1.1] text-tealDark">
+                    Fisioterapia e Benessere<br />
+                    <span class="font-light italic text-textDark">della colonna.</span>
                 </h2>
-                <p class="text-lg text-gray-600 max-w-md leading-relaxed">
-                    Affrontiamo i problemi della colonna e del movimento a 360° integrando postura, forza, mobilità e stile di vita.
+                
+                <p class="text-xl text-gray-600 max-w-lg leading-relaxed border-l-4 border-tealDark pl-6">
+                   Affrontiamo i problemi della colonna e del movimento a 360° integrando postura, forza, mobilità e stile di vita. 
                 </p>
-                <div class="pt-4">
-                    <a href="#contatti" class="inline-block bg-tealDark text-white px-8 py-3 rounded-tr-xl rounded-bl-xl hover:bg-[#08453e] transition-all transform hover:-translate-y-1 shadow-lg">
-                        Prenota una visita
+                
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <a href="#contatti" class="btn-pulse inline-flex justify-center items-center bg-tealDark text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#08453e] transition-all transform hover:-translate-y-1 shadow-lg hover:shadow-tealDark/30">
+                        Inizia il tuo percorso
+                        <i data-lucide="arrow-right" class="ml-2 w-5 h-5"></i>
+                    </a>
+                    <a href="#approccio" class="inline-flex justify-center items-center px-8 py-4 rounded-full text-lg font-medium text-tealDark border-2 border-tealDark hover:bg-tealLight/30 transition-colors">
+                        Scopri il metodo
                     </a>
                 </div>
+
+                <div class="flex items-center gap-4 text-sm text-gray-500 pt-2">
+                    <div class="flex -space-x-2">
+                        <div class="w-8 h-8 rounded-full bg-gray-200 border-2 border-white flex items-center justify-center text-xs font-bold text-gray-600">A</div>
+                        <div class="w-8 h-8 rounded-full bg-gray-300 border-2 border-white flex items-center justify-center text-xs font-bold text-gray-600">M</div>
+                        <div class="w-8 h-8 rounded-full bg-gray-400 border-2 border-white flex items-center justify-center text-xs font-bold text-gray-600">+</div>
+                    </div>
+                    <p>Oltre <span class="font-bold text-tealDark">1000+ pazienti</span> soddisfatti</p>
+                </div>
             </div>
-            <div class="relative flex justify-center">
-                <!-- Stylized Spine Graphic simulation -->
-                <div class="relative z-10 w-full max-w-md aspect-square bg-tealLight rounded-t-[150px] rounded-b-[20px] overflow-hidden shadow-xl">
-                    <!-- Immagine di placeholder fisioterapia -->
-                    <img 
-                    src="https://drive.google.com/thumbnail?id=1ONaDJ0xIjysSon9DOiZjcrtUvkoyfg1V&sz=w800" 
-                    alt="Trattamento fisioterapico" 
-                    class="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-700"
-                    />
+
+            <div class="relative flex justify-center perspective-1000">
+                <!-- Immagine principale con effetto "card" -->
+                <div class="relative z-10 w-full max-w-md aspect-[4/5] bg-white p-3 rounded-[32px] shadow-2xl animate-float">
+                    <div class="w-full h-full rounded-[24px] overflow-hidden relative">
+                         <img 
+                        src="https://drive.google.com/thumbnail?id=1ONaDJ0xIjysSon9DOiZjcrtUvkoyfg1V&sz=w800" 
+                        alt="Trattamento fisioterapico manuale" 
+                        class="w-full h-full object-cover hover:scale-105 transition-transform duration-1000"
+                        />
+                        <!-- Badge sovrapposto -->
+                        <div class="absolute bottom-6 left-6 bg-white/90 backdrop-blur px-5 py-3 rounded-xl shadow-lg border border-white/50">
+                            <p class="text-sm font-bold text-tealDark">Terapia Manuale</p>
+                            <div class="flex text-yellow-400 text-xs mt-1">★★★★★</div>
+                        </div>
+                    </div>
                 </div>
-                <!-- Decorative dots mimicking the spine logo (generated via JS loop simulation) -->
-                <div class="absolute -right-4 top-1/2 transform -translate-y-1/2 flex flex-col gap-2">
-                   <!-- Questi div simulano i pallini generati dal map in React -->
-                   <div class="w-3 h-3 rounded-full bg-tealDark opacity-80 translate-x-0"></div>
-                   <div class="w-3 h-3 rounded-full bg-tealDark opacity-80 translate-x-[8px]"></div>
-                   <div class="w-3 h-3 rounded-full bg-tealDark opacity-80 translate-x-[9px]"></div>
-                   <div class="w-3 h-3 rounded-full bg-tealDark opacity-80 translate-x-[1px]"></div>
-                   <div class="w-3 h-3 rounded-full bg-tealDark opacity-80 translate-x-[-7px]"></div>
-                   <div class="w-3 h-3 rounded-full bg-tealDark opacity-80 translate-x-[-9px]"></div>
-                </div>
+                
+                <!-- Decorative elements behind -->
+                <div class="absolute top-10 -right-4 w-24 h-24 bg-tealDark rounded-full opacity-10 blur-xl"></div>
+                <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-gold rounded-full opacity-10 blur-2xl"></div>
             </div>
         </div>
     </section>
 
     <!-- Approccio & Cosa Facciamo -->
-    <section id="approccio" class="py-20 bg-white relative">
-        <!-- DecorLeaf SVG embedded -->
-        <svg viewBox="0 0 100 100" class="absolute opacity-20 top-10 left-0 w-64 h-64 rotate-45 text-tealDark" fill="currentColor">
-            <path d="M50 0 C20 0 0 20 0 50 C0 80 20 100 50 100 C80 100 100 80 100 50 C100 30 80 0 50 0 Z M50 90 C30 90 10 70 10 50 C10 40 30 10 50 10 C70 10 90 40 90 50 C90 70 70 90 50 90 Z" />
-            <path d="M50 10 L50 90" stroke="currentColor" stroke-width="2" />
-            <path d="M50 30 L80 40" stroke="currentColor" stroke-width="2" />
-            <path d="M50 50 L20 60" stroke="currentColor" stroke-width="2" />
-            <path d="M50 70 L80 80" stroke="currentColor" stroke-width="2" />
-        </svg>
-        
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h3 class="text-3xl md:text-4xl font-serif text-tealDark mb-4">Il nostro approccio</h3>
-                <div class="w-24 h-1 bg-tealDark mx-auto rounded-full"></div>
+    <section id="approccio" class="py-24 bg-white relative">
+        <div class="container mx-auto px-6 fade-in-section">
+            <div class="text-center mb-16 max-w-2xl mx-auto">
+                <span class="text-tealDark font-bold tracking-widest text-sm uppercase mb-2 block">La nostra filosofia</span>
+                <h3 class="text-3xl md:text-5xl font-bold text-textDark mb-6">Curiamo la persona, <br>non solo il sintomo.</h3>
+                <p class="text-gray-600 text-lg">Il nostro obiettivo non è solo eliminare il dolore momentaneo, ma capire da dove nasce per prevenire che ritorni.</p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- Card 1 -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 w-24 h-24 bg-tealLight rounded-bl-full opacity-50 transition-transform group-hover:scale-110"></div>
-                    <i data-lucide="activity" class="w-10 h-10 text-tealDark mb-6"></i>
-                    <h4 class="text-xl font-bold mb-4 text-tealDark">Non solo il sintomo</h4>
+                <div class="bg-gray-50 p-10 rounded-3xl hover:bg-white hover:shadow-soft transition-all duration-300 group border border-transparent hover:border-gray-100">
+                    <div class="w-16 h-16 bg-tealLight rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform text-tealDark">
+                        <i data-lucide="activity" class="w-8 h-8"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-4 text-tealDark">Analisi Globale</h4>
                     <p class="text-gray-600 leading-relaxed">
-                        Crediamo che il benessere duraturo nasca da ascolto e consapevolezza.
+                        Non guardiamo solo dove fa male. Valutiamo la postura, le abitudini e la storia clinica per trovare la vera causa del problema.
                     </p>
                 </div>
 
-                <!-- Card 2 -->
-                <div class="bg-tealDark p-8 rounded-2xl shadow-lg text-white relative overflow-hidden transform md:-translate-y-4">
-                    <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-white opacity-10 rounded-full"></div>
-                    <i data-lucide="user" class="w-10 h-10 text-white mb-6"></i>
-                    <h4 class="text-xl font-bold mb-4">Un percorso unico</h4>
+                <!-- Card 2 (Featured) -->
+                <div class="bg-tealDark p-10 rounded-3xl shadow-xl text-white relative overflow-hidden transform md:-translate-y-6">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-bl-full"></div>
+                    <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mb-8 text-white">
+                        <i data-lucide="user-check" class="w-8 h-8"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-4">Percorso Su Misura</h4>
+                    <p class="text-teal-100 mb-6">Nessun protocollo standard. Ogni corpo è diverso e merita una strategia unica.</p>
                     <ul class="space-y-3">
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4"></i> Individuale</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4"></i> Personalizzato</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4"></i> Basato su obiettivi chiari</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4"></i> Verificabile nel tempo</li>
+                        <li class="flex items-center gap-3"><div class="bg-whatsappGreen/20 p-1 rounded-full"><i data-lucide="check" class="w-3 h-3 text-whatsappGreen"></i></div> Sedute individuali</li>
+                        <li class="flex items-center gap-3"><div class="bg-whatsappGreen/20 p-1 rounded-full"><i data-lucide="check" class="w-3 h-3 text-whatsappGreen"></i></div> Obiettivi condivisi</li>
+                        <li class="flex items-center gap-3"><div class="bg-whatsappGreen/20 p-1 rounded-full"><i data-lucide="check" class="w-3 h-3 text-whatsappGreen"></i></div> Monitoraggio costante</li>
                     </ul>
                 </div>
 
                 <!-- Card 3 -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 w-24 h-24 bg-tealLight rounded-bl-full opacity-50 transition-transform group-hover:scale-110"></div>
-                    <i data-lucide="heart" class="w-10 h-10 text-tealDark mb-6"></i>
-                    <h4 class="text-xl font-bold mb-4 text-tealDark">Perché sceglierci</h4>
-                    <ul class="space-y-2 text-gray-600 text-sm">
-                        <li class="flex items-start gap-2">
-                            <span class="text-tealDark mt-1">✓</span> Approccio olistico e scientifico
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <span class="text-tealDark mt-1">✓</span> Trattamento integrato di postura, mobilità e forza
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <span class="text-tealDark mt-1">✓</span> Forte attenzione all'ascolto
-                        </li>
-                    </ul>
+                <div class="bg-gray-50 p-10 rounded-3xl hover:bg-white hover:shadow-soft transition-all duration-300 group border border-transparent hover:border-gray-100">
+                    <div class="w-16 h-16 bg-tealLight rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform text-tealDark">
+                        <i data-lucide="heart" class="w-8 h-8"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-4 text-tealDark">Empatia e Ascolto</h4>
+                    <p class="text-gray-600 leading-relaxed">
+                        Crediamo che la guarigione inizi dall'ascolto. Creiamo un ambiente sicuro dove ti senti compreso e supportato.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Trattamenti Section (Sage Green Background) -->
-    <section id="trattamenti" class="py-20 bg-tealLight relative">
-        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+    <!-- Trattamenti Section -->
+    <section id="trattamenti" class="py-24 bg-tealAccent/30 relative">
+        <div class="container mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center fade-in-section">
             
-            <div class="order-2 md:order-1">
-                <!-- Arch Image Effect -->
-                <div class="relative mx-auto max-w-sm">
-                    <div class="absolute inset-0 border-2 border-tealDark rounded-t-full rounded-b-lg transform translate-x-4 translate-y-4"></div>
-                    <div class="relative rounded-t-full rounded-b-lg overflow-hidden shadow-2xl h-[400px]">
-                        <img 
-                        src="https://drive.google.com/thumbnail?id=1lg_X67AHhKbNY2ZxGHBEmGus9Z48e-2A&sz=w800" 
-                        alt="Studio Fisioterapia" 
-                        class="w-full h-full object-cover"
-                        />
-                    </div>
+            <div class="order-2 lg:order-1 relative">
+                <!-- Image Composition -->
+                <div class="relative z-10 rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+                    <img 
+                    src="https://drive.google.com/thumbnail?id=1lg_X67AHhKbNY2ZxGHBEmGus9Z48e-2A&sz=w800" 
+                    alt="Studio Fisioterapia Interni" 
+                    class="w-full h-[500px] object-cover"
+                    />
                 </div>
+                <!-- Decorative pattern dot -->
+                <div class="absolute -top-6 -left-6 w-24 h-24 bg-pattern-blob opacity-20 z-0"></div>
             </div>
 
-            <div class="order-1 md:order-2">
-                <h3 class="text-4xl font-serif text-tealDark mb-8">I nostri trattamenti</h3>
+            <div class="order-1 lg:order-2">
+                <span class="text-tealDark font-bold tracking-widest text-sm uppercase mb-2 block">Cosa Facciamo</span>
+                <h3 class="text-4xl font-bold text-textDark mb-8">Soluzioni complete per<br>la tua salute.</h3>
                 
-                <div class="grid gap-4">
-                    <!-- Elementi della lista trattamenti -->
-                    <div class="flex items-center bg-white/60 p-4 rounded-lg hover:bg-white transition-colors cursor-default">
-                        <div class="w-2 h-2 rounded-full bg-tealDark mr-4"></div>
-                        <span class="text-lg font-medium text-gray-800">Rieducazione posturale metodo RPG e Mézières</span>
+                <div class="space-y-4">
+                    <!-- List items redesigned -->
+                    <div class="group flex items-start p-4 rounded-xl hover:bg-white hover:shadow-md transition-all cursor-default border border-transparent hover:border-tealLight">
+                        <div class="mt-1 mr-4 min-w-[2rem] h-8 flex items-center justify-center bg-tealLight text-tealDark rounded-lg group-hover:bg-tealDark group-hover:text-white transition-colors">
+                            <i data-lucide="activity" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <h5 class="text-lg font-bold text-gray-800 group-hover:text-tealDark transition-colors">Rieducazione Posturale (RPG e Mézières)</h5>
+                            <p class="text-sm text-gray-500 mt-1">Per correggere disequilibri e dolori cronici della colonna.</p>
+                        </div>
                     </div>
-                    <div class="flex items-center bg-white/60 p-4 rounded-lg hover:bg-white transition-colors cursor-default">
-                        <div class="w-2 h-2 rounded-full bg-tealDark mr-4"></div>
-                        <span class="text-lg font-medium text-gray-800">Trattamento della scoliosi</span>
+
+                    <div class="group flex items-start p-4 rounded-xl hover:bg-white hover:shadow-md transition-all cursor-default border border-transparent hover:border-tealLight">
+                        <div class="mt-1 mr-4 min-w-[2rem] h-8 flex items-center justify-center bg-tealLight text-tealDark rounded-lg group-hover:bg-tealDark group-hover:text-white transition-colors">
+                            <i data-lucide="move" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <h5 class="text-lg font-bold text-gray-800 group-hover:text-tealDark transition-colors">Trattamento della Scoliosi</h5>
+                            <p class="text-sm text-gray-500 mt-1">Percorsi specifici per adolescenti e adulti.</p>
+                        </div>
                     </div>
-                    <div class="flex items-center bg-white/60 p-4 rounded-lg hover:bg-white transition-colors cursor-default">
-                        <div class="w-2 h-2 rounded-full bg-tealDark mr-4"></div>
-                        <span class="text-lg font-medium text-gray-800">Linfodrenaggio manuale</span>
+
+                    <div class="group flex items-start p-4 rounded-xl hover:bg-white hover:shadow-md transition-all cursor-default border border-transparent hover:border-tealLight">
+                        <div class="mt-1 mr-4 min-w-[2rem] h-8 flex items-center justify-center bg-tealLight text-tealDark rounded-lg group-hover:bg-tealDark group-hover:text-white transition-colors">
+                            <i data-lucide="droplet" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <h5 class="text-lg font-bold text-gray-800 group-hover:text-tealDark transition-colors">Linfodrenaggio Manuale</h5>
+                            <p class="text-sm text-gray-500 mt-1">Per ridurre gonfiori e migliorare la circolazione.</p>
+                        </div>
                     </div>
-                    <div class="flex items-center bg-white/60 p-4 rounded-lg hover:bg-white transition-colors cursor-default">
-                        <div class="w-2 h-2 rounded-full bg-tealDark mr-4"></div>
-                        <span class="text-lg font-medium text-gray-800">Fisioterapia sportiva</span>
-                    </div>
-                    <div class="flex items-center bg-white/60 p-4 rounded-lg hover:bg-white transition-colors cursor-default">
-                        <div class="w-2 h-2 rounded-full bg-tealDark mr-4"></div>
-                        <span class="text-lg font-medium text-gray-800">Prevenzione infortuni</span>
-                    </div>
-                    <div class="flex items-center bg-white/60 p-4 rounded-lg hover:bg-white transition-colors cursor-default">
-                        <div class="w-2 h-2 rounded-full bg-tealDark mr-4"></div>
-                        <span class="text-lg font-medium text-gray-800">Riabilitazione post-chirurgica e post-traumatica</span>
+                    
+                    <div class="group flex items-start p-4 rounded-xl hover:bg-white hover:shadow-md transition-all cursor-default border border-transparent hover:border-tealLight">
+                        <div class="mt-1 mr-4 min-w-[2rem] h-8 flex items-center justify-center bg-tealLight text-tealDark rounded-lg group-hover:bg-tealDark group-hover:text-white transition-colors">
+                            <i data-lucide="dumbbell" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <h5 class="text-lg font-bold text-gray-800 group-hover:text-tealDark transition-colors">Riabilitazione Sportiva e Post-Chirurgica</h5>
+                            <p class="text-sm text-gray-500 mt-1">Recupero funzionale per tornare alle tue attività al 100%.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Team/Contact Section (Dark Teal Background) -->
-    <section id="contatti" class="py-20 bg-tealDark text-white relative overflow-hidden">
+    <!-- NUOVA SEZIONE: Testimonianze (Social Proof) -->
+    <section id="testimonianze" class="py-24 bg-white">
+        <div class="container mx-auto px-6 fade-in-section">
+            <div class="text-center mb-16">
+                <h3 class="text-3xl md:text-4xl font-bold text-tealDark mb-4">La voce dei nostri pazienti</h3>
+                <p class="text-gray-600">Le storie di chi ha ritrovato il benessere con noi.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Review 1 -->
+                <div class="bg-gray-50 p-8 rounded-2xl relative">
+                    <i data-lucide="quote" class="absolute top-6 right-6 w-8 h-8 text-tealLight fill-current"></i>
+                    <div class="flex text-yellow-400 mb-4">★★★★★</div>
+                    <p class="text-gray-700 italic mb-6">"Sono arrivata con un mal di schiena che mi bloccava da mesi. Federica ha capito subito il problema. Dopo poche sedute sono rinata!"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-tealDark/10 rounded-full flex items-center justify-center text-tealDark font-bold">M</div>
+                        <div>
+                            <p class="font-bold text-sm text-textDark">Maria C.</p>
+                            <p class="text-xs text-gray-500">Paziente Cervicalgia</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="bg-gray-50 p-8 rounded-2xl relative border border-tealLight">
+                    <i data-lucide="quote" class="absolute top-6 right-6 w-8 h-8 text-tealLight fill-current"></i>
+                    <div class="flex text-yellow-400 mb-4">★★★★★</div>
+                    <p class="text-gray-700 italic mb-6">"Professionalità e gentilezza rare. Roberta mi ha seguito nel post-operatorio al ginocchio con una cura eccezionale. Consigliatissimo."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-tealDark/10 rounded-full flex items-center justify-center text-tealDark font-bold">L</div>
+                        <div>
+                            <p class="font-bold text-sm text-textDark">Luca R.</p>
+                            <p class="text-xs text-gray-500">Riabilitazione Sportiva</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="bg-gray-50 p-8 rounded-2xl relative">
+                    <i data-lucide="quote" class="absolute top-6 right-6 w-8 h-8 text-tealLight fill-current"></i>
+                    <div class="flex text-yellow-400 mb-4">★★★★★</div>
+                    <p class="text-gray-700 italic mb-6">"Finalmente qualcuno che ascolta davvero. L'approccio posturale mi ha aiutato non solo col dolore ma a stare meglio in generale."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-tealDark/10 rounded-full flex items-center justify-center text-tealDark font-bold">G</div>
+                        <div>
+                            <p class="font-bold text-sm text-textDark">Giulia M.</p>
+                            <p class="text-xs text-gray-500">Rieducazione Posturale</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="https://instagram.com/fisiopath.community" target="_blank" class="inline-flex items-center text-tealDark font-semibold hover:underline">
+                    Leggi altre storie su Instagram <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team/Contact Section -->
+    <section id="contatti" class="py-24 bg-tealDark text-white relative overflow-hidden">
         <!-- Decorative elements -->
         <div class="absolute top-0 left-0 w-64 h-64 bg-white opacity-5 rounded-br-full"></div>
         <div class="absolute bottom-0 right-0 w-96 h-96 bg-white opacity-5 rounded-tl-full"></div>
 
-        <div class="container mx-auto px-6 text-center relative z-10">
-            <h2 class="text-4xl font-serif mb-2">Contatti</h2>
-            <div class="w-16 h-1 bg-white mx-auto rounded-full mb-12 opacity-50"></div>
+        <div class="container mx-auto px-6 text-center relative z-10 fade-in-section">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4">Inizia a stare meglio.</h2>
+            <p class="text-tealLight text-lg mb-12 max-w-xl mx-auto">Non rimandare il tuo benessere. Siamo qui per ascoltarti e trovare la soluzione giusta per te.</p>
 
-           <div class="grid md:grid-cols-3 gap-12 max-w-4xl mx-auto mb-8">
-    <div class="space-y-4 min-h-[12rem] flex flex-col justify-between"> <div> <div class="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i data-lucide="user" class="w-8 h-8"></i>
-            </div>
-            <h4 class="text-xl font-bold">Dott.ssa Federica Palumbo</h4>
-        </div>
-        
-        <div class="flex flex-col items-center space-y-3">
-            <a href="tel:3294711560" class="flex items-center justify-center gap-2 text-lg hover:text-tealLight transition-colors group">
-                <i data-lucide="phone" class="w-[18px] h-[18px] group-hover:scale-105 transition-transform"></i> Chiama: 329 4711560
-            </a>
-            
-            <a href="https://wa.me/393294711560" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 text-base font-semibold bg-white text-green-700 px-4 py-1.5 rounded-full hover:bg-green-50 transition-all shadow-md group">
-                <i data-lucide="message-circle" class="w-[18px] h-[18px] text-whatsappGreen transition-transform group-hover:scale-110"></i> 
-                <span class="text-tealDark">WhatsApp</span>
-            </a>
-        </div>
-    </div>
-
-    <div class="space-y-4 min-h-[12rem] flex flex-col justify-between"> <div> <div class="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i data-lucide="user" class="w-8 h-8"></i>
-            </div>
-            <h4 class="text-xl font-bold">Dott.ssa Roberta Pignata</h4>
-        </div>
-        
-        <div class="flex flex-col items-center space-y-3">
-            <a href="tel:3382559172" class="flex items-center justify-center gap-2 text-lg hover:text-tealLight transition-colors group">
-                <i data-lucide="phone" class="w-[18px] h-[18px] group-hover:scale-105 transition-transform"></i> Chiama: 338 2559172
-            </a>
-            
-            <a href="https://wa.me/393382559172" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 text-base font-semibold bg-white text-green-700 px-4 py-1.5 rounded-full hover:bg-green-50 transition-all shadow-md group">
-                <i data-lucide="message-circle" class="w-[18px] h-[18px] text-whatsappGreen transition-transform group-hover:scale-110"></i> 
-                <span class="text-tealDark">WhatsApp</span>
-            </a>
-        </div>
-    </div>
-
-<div class="space-y-4 min-h-[12rem] flex flex-col justify-start"> <div class="flex flex-col items-center"> <div class="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <i data-lucide="instagram" class="w-8 h-8"></i>
-        </div>
-        <h4 class="text-xl font-bold">Seguici</h4>
-    </div>
-    
-    <a href="https://instagram.com/fisiopath.community" target="_blank" rel="noreferrer" class="flex items-center justify-center gap-2 text-lg hover:text-tealLight transition-colors">
-        @fisiopath.community
-    </a>
-</div> 
-         <!-- Nuovo Blocco Indirizzo dello Studio -->
-   <div class="max-w-xl mx-auto mb-8 p-6 flex flex-col items-center space-y-4 border border-white/20 rounded-xl bg-white/5">
-                <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center">
-                    <i data-lucide="map-pin" class="w-6 h-6"></i>
+            <!-- Griglia Contatti Principali -->
+            <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-16">
+                
+                <!-- Colonna 1: Dott.ssa Palumbo -->
+                <div class="bg-white/5 backdrop-blur-sm p-6 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors group"> 
+                    <div class="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                        <i data-lucide="user" class="w-8 h-8 text-tealAccent"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-1">Dott.ssa Federica Palumbo</h4>
+                    <p class="text-sm text-tealLight mb-6">Fisioterapista</p>
+                    
+                    <div class="flex flex-col items-center space-y-3">
+                        <a href="tel:3294711560" class="flex items-center justify-center gap-2 text-lg hover:text-white text-white/90 transition-colors">
+                            <i data-lucide="phone" class="w-5 h-5"></i> 329 4711560
+                        </a>
+                        <a href="https://wa.me/393294711560" target="_blank" class="w-full flex items-center justify-center gap-2 text-sm font-bold bg-whatsappGreen text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-all shadow-md">
+                            <i data-lucide="message-circle" class="w-4 h-4"></i> Chat su WhatsApp
+                        </a>
+                    </div>
                 </div>
-                <h4 class="text-xl font-bold">Indirizzo Studio</h4>
-                <p class="text-lg text-center text-tealLight leading-snug">
-                    Ambulatorio so.ge.san, Piazza Immacolata 34, Napoli
-                </p>
-                <a href="https://maps.google.com/?q=Piazza+Immacolata+34,+Napoli" target="_blank" rel="noopener noreferrer" class="text-sm uppercase tracking-wider text-white border-b border-white/50 hover:border-white transition-colors mt-2">
-                    Visualizza su Mappa
-                </a>
+
+                <!-- Colonna 2: Dott.ssa Pignata -->
+                <div class="bg-white/5 backdrop-blur-sm p-6 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors group"> 
+                    <div class="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                        <i data-lucide="user" class="w-8 h-8 text-tealAccent"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-1">Dott.ssa Roberta <br> Pignata</h4>
+                    <p class="text-sm text-tealLight mb-6">Fisioterapista</p>
+                    
+                    <div class="flex flex-col items-center space-y-3">
+                        <a href="tel:3382559172" class="flex items-center justify-center gap-2 text-lg hover:text-white text-white/90 transition-colors">
+                            <i data-lucide="phone" class="w-5 h-5"></i> 338 2559172
+                        </a>
+                        <a href="https://wa.me/393382559172" target="_blank" class="w-full flex items-center justify-center gap-2 text-sm font-bold bg-whatsappGreen text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-all shadow-md">
+                            <i data-lucide="message-circle" class="w-4 h-4"></i> Chat su WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Colonna 3: Social & Mappa -->
+                <div class="bg-white/5 backdrop-blur-sm p-6 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors flex flex-col justify-center"> 
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-tr from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                            <i data-lucide="instagram" class="w-8 h-8 text-white"></i>
+                        </div>
+                        <h4 class="text-lg font-bold">Segui la community</h4>
+                        <a href="https://instagram.com/fisiopath.community" target="_blank" class="text-tealLight hover:text-white text-sm">@fisiopath.community</a>
+                    </div>
+                    
+                    <div class="border-t border-white/10 pt-6 mt-2 text-center">
+                        <i data-lucide="map-pin" class="w-6 h-6 mx-auto mb-2 text-tealAccent"></i>
+                        <p class="text-sm text-white/80 mb-3">Piazza Immacolata 34, Napoli<br>(Ambulatorio So.Ge.San)</p>
+                        <a href="https://maps.google.com/?q=Piazza+Immacolata+34,+Napoli" target="_blank" class="text-xs uppercase tracking-wider font-bold border-b border-white/30 pb-0.5 hover:text-tealAccent hover:border-tealAccent transition-colors">Apri Mappa</a>
+                    </div>
+                </div> 
+                
             </div>
 
-                        <div class="bg-white/10 p-8 rounded-2xl max-w-xl mx-auto mb-16 backdrop-blur-sm">
-                <h3 class="text-2xl font-light mb-6">Prenota il tuo appuntamento</h3>
-                <p class="mb-8 opacity-90">
-                    Il tuo percorso è unico. Noi lo costruiamo con te. <br/>
-                    Contattaci telefonicamente o scrivici su WhatsApp o Instagram per maggiori informazioni.
-                </p>
-                <a href="#contatti" class="inline-block bg-white text-tealDark px-10 py-4 rounded-full font-bold hover:bg-tealLight transition-colors shadow-lg">
-                    Contattaci Ora
-                </a>
-            </div>
+            <!-- Footer Message -->
+            <p class="text-white/40 text-sm max-w-lg mx-auto">
+                Riceviamo solo su appuntamento per garantire la massima attenzione ad ogni paziente.
+            </p>
         </div>
     </section>
-    
+  
     <!-- Footer -->
-    <footer class="bg-[#08453e] text-white/60 py-8 text-center text-sm">
+    <footer class="bg-[#052e2a] text-white/40 py-8 text-center text-sm border-t border-white/5">
         <div class="container mx-auto px-6">
-            <p>&copy; <span id="year"></span> FisioPath. Tutti i diritti riservati.</p>
-            <div class="flex justify-center gap-4 mt-4">
-                <i data-lucide="leaf" class="w-4 h-4"></i>
-                <span>Salute e Benessere</span>
-                <i data-lucide="leaf" class="w-4 h-4"></i>
+            <div class="flex justify-center gap-6 mb-4">
+                <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-white transition-colors">Cookie Policy</a>
             </div>
+            <p>&copy; <span id="year"></span> FisioPath. Tutti i diritti riservati.</p>
         </div>
     </footer>
 
-    <!-- Script per funzionalità JS (Menu, Scroll, Icone) -->
+    <!-- Script per funzionalità JS (Menu, Scroll, Icone, Animazioni) -->
     <script>
         // Inizializza le icone Lucide
         lucide.createIcons();
@@ -369,16 +471,14 @@
         menuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
             
-            // Cambio icona (opzionale, qui semplice toggle visibilità)
             if (mobileMenu.classList.contains('hidden')) {
                 menuBtn.innerHTML = '<i data-lucide="menu" class="w-7 h-7"></i>';
             } else {
                 menuBtn.innerHTML = '<i data-lucide="x" class="w-7 h-7"></i>';
             }
-            lucide.createIcons(); // Re-inizializza icone appena inserite
+            lucide.createIcons();
         });
 
-        // Chiudi menu quando si clicca un link
         mobileLinks.forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.add('hidden');
@@ -387,29 +487,37 @@
             });
         });
 
-        // Gestione Scroll Navbar
+        // Gestione Scroll Navbar e aspetto "Glass"
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('bg-white', 'shadow-md', 'py-2');
+            if (window.scrollY > 20) {
+                navbar.classList.add('bg-white/90', 'shadow-md', 'py-2');
                 navbar.classList.remove('bg-transparent', 'py-4');
             } else {
-                navbar.classList.remove('bg-white', 'shadow-md', 'py-2');
+                navbar.classList.remove('bg-white/90', 'shadow-md', 'py-2');
                 navbar.classList.add('bg-transparent', 'py-4');
             }
+        });
+
+        // Intersection Observer per animazioni "Fade In"
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target); // Anima solo una volta
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-section').forEach(section => {
+            observer.observe(section);
         });
     </script>
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
